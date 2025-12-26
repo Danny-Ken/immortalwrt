@@ -15,8 +15,6 @@ on:
         default: '256M'
         options:
           - '256M'
-          - '128M'
-          - '128M-Ubootmod'
       ssh:
         description: '是否执行 make menuconfig'
         required: false
@@ -62,9 +60,7 @@ jobs:
       - name: 🔧 Set device variables
         run: |
           case "$DEVICE_INPUT" in
-            "256M") echo "CONFIG_FILE=config/256m.config" >> $GITHUB_ENV ;;
-            "128M") echo "CONFIG_FILE=config/128m.config" >> $GITHUB_ENV ;;
-            "128M-Ubootmod") echo "CONFIG_FILE=config/128muboot.config" >> $GITHUB_ENV ;;
+            "256M") echo "CONFIG_FILE=config/tr3000.config" >> $GITHUB_ENV ;;
             *) echo "Unknown device: $DEVICE_INPUT" >&2; exit 1 ;;
           esac
 
@@ -190,19 +186,9 @@ jobs:
         run: |
           case "$DEVICE_INPUT" in
             "256M")
-              echo "CONFIG_FILE=config/256m.config" >> $GITHUB_ENV
+              echo "CONFIG_FILE=config/tr3000.config" >> $GITHUB_ENV
               echo "FIRMWARE_NAME=256M" >> $GITHUB_ENV
               echo "DELETE_TAG_PATTERN=^256M-.*" >> $GITHUB_ENV
-              ;;
-            "128M")
-              echo "CONFIG_FILE=config/128m.config" >> $GITHUB_ENV
-              echo "FIRMWARE_NAME=128M" >> $GITHUB_ENV
-              echo "DELETE_TAG_PATTERN=^128M-.*" >> $GITHUB_ENV
-              ;;
-            "128M-Ubootmod")
-              echo "CONFIG_FILE=config/128muboot.config" >> $GITHUB_ENV
-              echo "FIRMWARE_NAME=128M_Ubootmod" >> $GITHUB_ENV
-              echo "DELETE_TAG_PATTERN=^128M_Ubootmod-.*" >> $GITHUB_ENV
               ;;
           esac
 
